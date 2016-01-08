@@ -12,7 +12,6 @@ import CoreLocation
 import CoreMotion
 
 class ViewController: UIViewController,CLLocationManagerDelegate {
-    //MARK: - Camera Methods
     
     @IBOutlet weak var previewView: UIView!
     var captureSession :AVCaptureSession?
@@ -20,7 +19,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var capturedImage :UIImageView!
     var stillImageOutput :AVCaptureStillImageOutput?
     
-    //@IBOutlet weak var label: UILabel!
+    //MARK: - Camera Methods
     
     func startCaptureSession() {
         captureSession = AVCaptureSession()
@@ -117,8 +116,6 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     @IBOutlet var NWLabel :UILabel!
     @IBOutlet var NWconstraint: NSLayoutConstraint!
     
-    @IBOutlet var testLabel :UILabel!
-    
     @IBAction func startGettingHeading(sender: UIButton) {
         locationManager.delegate = self
         locationManager.startUpdatingHeading()
@@ -132,9 +129,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
         var headingString = ""
         let constant = (newHeading.magneticHeading)
         var constraintConstant = CGFloat(0)
-        let labelList = [UILabel]()
+        
         switch newHeading.magneticHeading{
-            
         case 0...22.5:
             headingString = "N"
             constraintConstant = CGFloat(constant)
@@ -166,50 +162,54 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
             headingString = "?"
         }
         
+        let width = UIScreen.mainScreen().bounds.width
         
-        let wholeDegrees = String(format: "%.0f", newHeading.magneticHeading)
-        testLabel.text = "\(headingString) \(wholeDegrees)°"
-        testLabel.sizeToFit()
-        let width = UIScreen.mainScreen().bounds.width + (UIScreen.mainScreen().bounds.width / 2)
-        Nconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360
-        NEconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + NELabel.frame.width
-        Econstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (ELabel.frame.width * 2)
-        SEconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (SELabel.frame.width * 3)
-        Sconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (SLabel.frame.width * 4)
-        SWconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (SWLabel.frame.width * 5)
-        Wconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (WLabel.frame.width * 6)
-        NWconstraint.constant = width - ((constraintConstant * width) - ((width / 2) * 360))/360 + (NLabel.frame.width * 7)
+        Nconstraint.constant = ((width / 2) - (NLabel.frame.width / 2)) - ((constraintConstant * width) / 360)
+        
+        NEconstraint.constant = ((width / 2) - (NELabel.frame.width / 2)) - ((constraintConstant * width) / 360) + NELabel.frame.width
+        
+        Econstraint.constant = ((width / 2) - (ELabel.frame.width / 2)) - ((constraintConstant * width) / 360) + ELabel.frame.width * 2
+        
+        SEconstraint.constant = ((width / 2) - (SELabel.frame.width / 2)) - ((constraintConstant * width) / 360) + SELabel.frame.width * 3
+        
+        Sconstraint.constant = ((width / 2) - (SLabel.frame.width / 2)) - ((constraintConstant * width) / 360) + SLabel.frame.width * 4
+        
+        SWconstraint.constant = ((width / 2) - (SWLabel.frame.width / 2)) - ((constraintConstant * width) / 360) + SWLabel.frame.width * 5
+        
+        Wconstraint.constant = ((width / 2) - (WLabel.frame.width / 2)) - ((constraintConstant * width) / 360) + WLabel.frame.width * 6
+        
+        NWconstraint.constant = ((width / 2) - (NWLabel.frame.width / 2)) - ((constraintConstant * width) / 360) + NWLabel.frame.width * 7
         
         if (NLabel.frame.origin.x > width) {
-            Nconstraint.constant -= width
+            Nconstraint.constant = Nconstraint.constant - width
         }
         
         if (NELabel.frame.origin.x > width) {
-            NEconstraint.constant -= width
+            NEconstraint.constant = NEconstraint.constant - width
         }
         
         if (ELabel.frame.origin.x > width) {
-            Econstraint.constant -= width
+            Econstraint.constant = Econstraint.constant - width
         }
         
         if (SELabel.frame.origin.x > width) {
-            SEconstraint.constant -= width
+            SEconstraint.constant = SEconstraint.constant - width
         }
         
         if (SLabel.frame.origin.x > width) {
-            Sconstraint.constant -= width
+            Sconstraint.constant = Sconstraint.constant - width
         }
         
         if (SWLabel.frame.origin.x > width) {
-            SWconstraint.constant -= width
+            SWconstraint.constant = SWconstraint.constant - width
         }
         
         if (WLabel.frame.origin.x > width) {
-            Wconstraint.constant -= width
+            Wconstraint.constant = Wconstraint.constant - width
         }
         
         if (NWLabel.frame.origin.x > width) {
-            NWconstraint.constant -= width
+            NWconstraint.constant = NWconstraint.constant - width
         }
     }
     
